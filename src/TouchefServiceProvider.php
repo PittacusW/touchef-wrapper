@@ -1,6 +1,6 @@
 <?php
 
-namespace PittacusW\Touchef;
+namespace Pittacusw\Touchef;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -11,15 +11,14 @@ class TouchefServiceProvider extends ServiceProvider {
   *
   * @var bool
   */
- protected $defer = false;
-
+ protected $defer = FALSE;
 
  /**
   * Publish asset
   */
  public function boot() {
   $this->publishes([
-                    __DIR__.'/../../config/config.php' => config_path('touchef.php'),
+                    __DIR__ . '/../../config/config.php' => config_path('touchef.php'),
                    ]);
  }
 

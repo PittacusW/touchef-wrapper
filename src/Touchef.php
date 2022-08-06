@@ -1,6 +1,6 @@
 <?php
 
-namespace PittacusW\Touchef;
+namespace Pittacusw\Touchef;
 
 class Touchef {
 

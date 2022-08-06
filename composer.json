@@ -1,35 +1,36 @@
 {
-    "name": "pittacusw/touchef",
-    "description": "Wrapper to connect a Laravel application to the Touchef API",
-    "keywords": [
-        "laravel",
-        "touchef"
-    ],
-    "license": "LGPL-3.0",
-    "authors": [
-        {
-            "name": "Touchef",
-            "email": "contacto@touchef.cl"
-        }
-    ],
-    "require": {
-        "php": " ^8.1",
-        "laravel/framework": "^9.23",
-        "freshwork/chilean-bundle": "^2.1"
-    },
-    "autoload": {
-        "psr-0": {
-            "PittacusW\\Touchef": "src/"
-        }
-    },
-    "minimum-stability": "stable",
-    "config": {
-        "sort-packages": true
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "PittacusW\\Touchef\\TouchefServiceProvider"
-            ]
-        }
-}}
+  "name": "pittacusw/touchef",
+  "description": "Wrapper to connect a Laravel application to the Touchef API",
+  "keywords": [
+    "laravel",
+    "touchef"
+  ],
+  "license": "LGPL-3.0",
+  "authors": [
+    {
+      "name": "Touchef",
+      "email": "contacto@touchef.cl"
+    }
+  ],
+  "require": {
+    "php": " ^8.1",
+    "laravel/framework": "^9.23",
+    "freshwork/chilean-bundle": "^2.1"
+  },
+  "autoload": {
+    "psr-0": {
+      "Pittacusw\\Touchef": "src/"
+    }
+  },
+  "minimum-stability": "stable",
+  "config": {
+    "sort-packages": true
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Pittacusw\\Touchef\\TouchefServiceProvider"
+      ]
+    }
+  }
+}
