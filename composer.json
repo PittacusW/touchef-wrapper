@@ -5,12 +5,11 @@
     "laravel",
     "touchef"
   ],
-  "license": "MIT",
+  "license": "LGPL-3.0",
   "authors": [
     {
       "name": "Touchef",
-      "email": "contacto@touchef.cl",
-      "homepage": "https://touchef.cl"
+      "email": "contacto@touchef.cl"
     }
   ],
   "require": {
@@ -31,10 +30,7 @@
     "laravel": {
       "providers": [
         "Pittacusw\\Touchef\\TouchefServiceProvider"
-      ],
-      "aliases": {
-        "Touchef": "Pittacusw\\Touchef\\TouchefFacade"
-      }
+      ]
     }
   }
 }

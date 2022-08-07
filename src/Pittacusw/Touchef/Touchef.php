@@ -69,8 +69,8 @@ class Touchef {
   return $this->get("ventas/resumen/$year/$month");
  }
 
- public function sale($id) {
-  return $this->get("ventas/$id");
+ public function sale($uuid) {
+  return $this->get("ventas/$uuid");
  }
 
  public function expenses($year, $month) {
@@ -81,8 +81,8 @@ class Touchef {
   return $this->get("compras/resumen/$year/$month");
  }
 
- public function expense($id) {
-  return $this->get("compras/$id");
+ public function expense($uuid) {
+  return $this->get("compras/$uuid");
  }
 
  public function pending() {
@@ -157,7 +157,7 @@ class Touchef {
  protected function get($route) {
   $request = $this->http->get($this->url . $route);
   $object  = $request->object();
-  abort_if(!isset($object->records), $request->status(), $object->message ?? $object->msg);
+  abort_if(!isset($object->records), $request->status());
 
   return $object->records;
  }
