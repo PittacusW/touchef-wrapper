@@ -28,6 +28,9 @@ class TouchefServiceProvider extends ServiceProvider {
   * @return void
   */
  public function register() {
+  $this->app->singleton('Touchef', function() {
+   return new Touchef;
+  });
  }
 
  /**
@@ -36,6 +39,7 @@ class TouchefServiceProvider extends ServiceProvider {
   * @return array
   */
  public function provides() {
+  return ["Touchef"];
  }
 
 }
