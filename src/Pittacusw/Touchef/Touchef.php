@@ -116,6 +116,10 @@ class Touchef {
      ->records;
   }
 
+  public function send_email($number, $type) {
+    $this->http->post($this->url . 'enviar-dte/' . $number . '/' . $type);
+  }
+
   public function create_document(int $documents_type, $date, array $client, array $details, $expiring_date = NULL, array $transport = [], array $globals = [], array $references = [], bool $draft = FALSE) {
     $request = $this->http->post($this->url . 'ventas', [
      'documents_type' => $documents_type,
