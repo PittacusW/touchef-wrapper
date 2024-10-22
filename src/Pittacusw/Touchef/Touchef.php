@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Http;
 
 class Touchef {
 
-  protected $url = 'https://api.touchef.cl/v1/';
+  protected $url = 'https://api.frozenbox.cl/v1/';
   protected $http;
 
   public function __construct($rut = NULL) {
