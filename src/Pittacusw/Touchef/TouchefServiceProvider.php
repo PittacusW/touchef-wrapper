@@ -3,39 +3,37 @@
 namespace Pittacusw\Touchef;
 
 use Illuminate\Support\ServiceProvider;
+use Pittacusw\Touchef\Console\InstallAgentSkillCommand;
 
-class TouchefServiceProvider extends ServiceProvider {
+class TouchefServiceProvider extends ServiceProvider
+{
+    public function boot(): void
+    {
+        $packageRoot = dirname(__DIR__, 3);
 
- /**
-  * Indicates if loading of the provider is deferred.
-  *
-  * @var bool
-  */
- protected $defer = FALSE;
+        $this->publishes([
+            $packageRoot . '/src/config/config.php' => config_path('touchef.php'),
+        ], 'touchef-config');
 
- /**
-  * Publish asset
-  */
- public function boot() {
-  $this->publishes([
-                    __DIR__ . '/../../config/config.php' => config_path('touchef.php'),
-                   ]);
- }
+        $this->publishes([
+            $packageRoot . '/.agents/skills/touchef' => base_path('.agents/skills/touchef'),
+        ], 'touchef-agent-skill');
+    }
 
- /**
-  * Register the service provider.
-  *
-  * @return void
-  */
- public function register() {
- }
+    public function register(): void
+    {
+        $this->mergeConfigFrom(__DIR__ . '/../../config/config.php', 'touchef');
 
- /**
-  * Get the services provided by the provider.
-  *
-  * @return array
-  */
- public function provides() {
- }
+        $this->app->singleton(Touchef::class, static function (): Touchef {
+            return new Touchef();
+        });
 
+        $this->app->alias(Touchef::class, 'Touchef');
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                InstallAgentSkillCommand::class,
+            ]);
+        }
+    }
 }

@@ -4,14 +4,10 @@ namespace Pittacusw\Touchef;
 
 use Illuminate\Support\Facades\Facade;
 
-class TouchefFacade extends Facade{
- /**
-  * Get the registered name of the component.
-  *
-  * @return string
-  */
- protected static function getFacadeAccessor() {
-  return 'Touchef';
- }
-
+class TouchefFacade extends Facade
+{
+    protected static function getFacadeAccessor(): string
+    {
+        return 'Touchef';
+    }
 }
