@@ -205,7 +205,9 @@ class Touchef
         ]);
         $object = $request->object();
 
-        abort_if(! is_object($object) || ! isset($object->queued), $request->status());
+        if (! is_object($object) || ! isset($object->queued)) {
+            throw new \RuntimeException($this->unexpectedResponseMessage($request), $request->status());
+        }
 
         return $object;
     }
@@ -306,7 +308,9 @@ class Touchef
     {
         $request = $this->http->{$method}($this->url . $route, $data);
 
-        abort_if($request->failed(), $request->status());
+        if ($request->failed()) {
+            throw new \RuntimeException($this->errorMessage($request), $request->status());
+        }
 
         return $request;
     }
@@ -315,9 +319,59 @@ class Touchef
     {
         $object = $request->object();
 
-        abort_if(! is_object($object) || ! isset($object->records), $request->status());
+        if (! is_object($object) || ! isset($object->records)) {
+            throw new \RuntimeException($this->unexpectedResponseMessage($request), $request->status());
+        }
 
         return $object->records;
+    }
+
+    protected function unexpectedResponseMessage(Response $request): string
+    {
+        return 'Unexpected Touchef response: ' . $this->errorMessage($request);
+    }
+
+    protected function errorMessage(Response $request): string
+    {
+        $payload = $request->json();
+
+        if (is_array($payload)) {
+            $messages = [];
+
+            foreach (['msg', 'message', 'error'] as $field) {
+                if (! empty($payload[$field]) && is_string($payload[$field])) {
+                    $messages[] = $payload[$field];
+                }
+            }
+
+            if (! empty($payload['errors']) && is_array($payload['errors'])) {
+                foreach ($payload['errors'] as $error) {
+                    if (is_array($error)) {
+                        foreach ($error as $message) {
+                            if (is_string($message) && $message !== '') {
+                                $messages[] = $message;
+                            }
+                        }
+                    } elseif (is_string($error) && $error !== '') {
+                        $messages[] = $error;
+                    }
+                }
+            }
+
+            $messages = array_values(array_unique($messages));
+
+            if ($messages !== []) {
+                return 'HTTP ' . $request->status() . ': ' . implode(' ', $messages);
+            }
+        }
+
+        $body = trim((string) $request->body());
+
+        if ($body !== '') {
+            return 'HTTP ' . $request->status() . ': ' . $body;
+        }
+
+        return 'HTTP ' . $request->status();
     }
 
     protected function syncToken(?string $token): void
